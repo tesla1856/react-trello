@@ -26,3 +26,7 @@ export function selectTopic(topicUrl) {
     dispatch({ type: types.TOPICS_SELECTED, selectedTopicUrls: newSelectedTopics });
   };
 }
+
+export function finalizeTopicSelection() {
+  return({ type: types.TOPIC_SELECTION_FINALIZED });
+}

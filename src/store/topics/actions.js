@@ -5,7 +5,7 @@ import * as topicsSelectors from './reducer';
 
 
 export function fetchTopics() {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     try {
       const subredditArray = await redditService.getDefaultSubreddits();
       const topicsByUrl = _.keyBy(subredditArray, (subreddit) => subreddit.url);
@@ -30,3 +30,4 @@ export function selectTopic(topicUrl) {
 export function finalizeTopicSelection() {
   return({ type: types.TOPIC_SELECTION_FINALIZED });
 }
+

@@ -8,6 +8,7 @@ import ListView from '../components/ListView';
 import ListRow from '../components/ListRow';
 
 class TopicsScreen extends Component {
+  
     componentDidMount(){
         this.props.dispatch(topicsActions.fetchTopics());
     }

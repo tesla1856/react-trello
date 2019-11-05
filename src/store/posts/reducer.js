@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import Immutable from 'seamless-immutable';
+import * as types from './actionTypes';
 
 const initialState = Immutable({
   postsById: undefined,
@@ -8,7 +10,17 @@ const initialState = Immutable({
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
+    case types.POSTS_FETCHED:
+      console.log("POSTS_FETCHED");
+      return state.merge({ postsById: action.postsById });
     default:
       return state;
   }
+}
+
+export function getPosts(state) {
+  console.log("getPosts");
+  const postsById = state.posts.postsById;
+  const postsIdArray = _.keys(postsById);
+  return [postsById, postsIdArray];
 }

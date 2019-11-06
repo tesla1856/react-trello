@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import * as types from './actionTypes';
-import * as topicsSelectors from '../topics/reducer';
 import redditService from '../../services/reddit';
+import * as topicsSelectors from '../topics/reducer';
+import * as types from './actionTypes';
 
 export function fetchPosts() {
     return async (dispatch, getState) => {
@@ -9,11 +9,15 @@ export function fetchPosts() {
             const selectedTopicUrls = topicsSelectors.getSelectedTopicUrls(getState());
             const fetchPromises = _.map(selectedTopicUrls, (topicUrl) => redditService.getPostsFromSubreddit(topicUrl));
             const topicPosts = await Promise.all(fetchPromises);
-            const postsById = _.keyBy(_.flatten(topicPosts), (post) => post.id);
+            const postsById = _.keyBy(_.shuffle(_.flatten(topicPosts)), (post) => post.id);
             dispatch({ type: types.POSTS_FETCHED, postsById });
 
         } catch (e) {
             console.log(e);
         }
     }
+}
+
+export function changeFilter(newFilter) {
+    return ({ type: types.FILTER_CHANGED, filter: newFilter });
 }

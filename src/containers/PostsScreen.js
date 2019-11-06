@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import ListRow from '../components/ListRow';
+import ListView from '../components/ListView';
+import TopicFilter from '../components/TopicFilter';
 import * as postsActions from '../store/posts/actions';
 import * as postsSelectors from '../store/posts/reducer';
-import ListView from '../components/ListView';
-import ListRow from '../components/ListRow';
-
+import * as topicsSelectors from '../store/topics/reducer';
 import './PostsScreen.css';
+
+
 
 
 class PostsScreen extends Component {
@@ -19,6 +21,12 @@ class PostsScreen extends Component {
     if (!this.props.rowsById) return this.renderLoading();
     return (
       <div className="PostsScreen">
+        <TopicFilter
+          className="TopicFilter"
+          topics={this.props.topicsByUrl}
+          selected={this.props.currentFilter}
+          onChanged={this.onFilterChanged.bind(this)}
+        />
         <ListView
           rowsIdArray={this.props.rowsIdArray}
           rowsById={this.props.rowsById}
@@ -44,13 +52,19 @@ class PostsScreen extends Component {
     )
   }
 
+  onFilterChanged(newFilter) {
+    this.props.dispatch(postsActions.changeFilter(newFilter));
+  }
+
 }
 
 function mapStateToProps(state) {
   const [postsById, postsIdArray] = postsSelectors.getPosts(state);
   return {
     rowsById: postsById,
-    rowsIdArray: postsIdArray
+    rowsIdArray: postsIdArray,
+    topicsByUrl: topicsSelectors.getSelectedTopicsByUrl(state),
+    currentFilter: postsSelectors.getCurrentFilter(state)
   };
 }
 

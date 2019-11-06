@@ -16,7 +16,7 @@ export default function reduce(state = initialState, action = {}) {
                 topicsByUrl: action.topicsByUrl
             });
         case types.TOPICS_SELECTED:
-            return state.merge ({
+            return state.merge({
                 selectedTopicUrls: action.selectedTopicUrls
             });
         case types.TOPIC_SELECTION_FINALIZED:
@@ -50,4 +50,4 @@ export function isTopicSelectionValid(state) {
 
 export function isTopicSelectionFinalized(state) {
     return state.topics.selectionFinalized;
-  }
+}

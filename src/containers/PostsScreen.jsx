@@ -11,7 +11,7 @@ import './PostsScreen.css';
 
 class PostsScreen extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch(postsActions.fetchPosts());
   }
 
@@ -19,7 +19,7 @@ class PostsScreen extends Component {
     if (!this.props.rowsById) return this.renderLoading();
     return (
       <div className="PostsScreen">
-        <ListView 
+        <ListView
           rowsIdArray={this.props.rowsIdArray}
           rowsById={this.props.rowsById}
           renderRow={this.renderRow.bind(this)} />
@@ -27,31 +27,31 @@ class PostsScreen extends Component {
     );
   }
 
-  renderLoading(){
+  renderLoading() {
     return (
       <p>Loading...</p>
-    );  
+    );
   }
-  
-  renderRow(rowId, row){
+
+  renderRow(rowId, row) {
     return (
-      <ListRow rowId = {rowId}>
+      <ListRow rowId={rowId}>
         {!row.thumbnail ? false :
           <img className="thumbnail" src={row.thumbnail} />
         }
         <h3>{row.title}</h3>
       </ListRow>
-      )
+    )
   }
 
-  }
+}
 
-  function mapStateToProps(state) {
-    const [postsById, postsIdArray] = postsSelectors.getPosts(state);
-    return {
-      rowsById: postsById,
-      rowsIdArray: postsIdArray
-    };
-  }
-  
-  export default connect(mapStateToProps)(PostsScreen);
+function mapStateToProps(state) {
+  const [postsById, postsIdArray] = postsSelectors.getPosts(state);
+  return {
+    rowsById: postsById,
+    rowsIdArray: postsIdArray
+  };
+}
+
+export default connect(mapStateToProps)(PostsScreen);

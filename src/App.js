@@ -21,8 +21,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-      isSelectionFinalized: topicsSelectors.isTopicSelectionFinalized(state)
+        isSelectionFinalized: topicsSelectors.isTopicSelectionFinalized(state)
     };
-  }
-  
+}
+
 export default connect(mapStateToProps)(App);

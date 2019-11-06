@@ -28,6 +28,6 @@ export function selectTopic(topicUrl) {
 }
 
 export function finalizeTopicSelection() {
-  return({ type: types.TOPIC_SELECTION_FINALIZED });
+  return ({ type: types.TOPIC_SELECTION_FINALIZED });
 }
 

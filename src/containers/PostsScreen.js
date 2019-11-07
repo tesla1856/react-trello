@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import ListRow from '../components/ListRow';
 import ListView from '../components/ListView';
 import TopicFilter from '../components/TopicFilter';
+import PostView from '../components/PostView';
+
 import * as postsActions from '../store/posts/actions';
 import * as postsSelectors from '../store/posts/reducer';
 import * as topicsSelectors from '../store/topics/reducer';
+
 import './PostsScreen.css';
-
-
 
 
 class PostsScreen extends Component {
@@ -21,16 +23,21 @@ class PostsScreen extends Component {
     if (!this.props.rowsById) return this.renderLoading();
     return (
       <div className="PostsScreen">
-        <TopicFilter
-          className="TopicFilter"
-          topics={this.props.topicsByUrl}
-          selected={this.props.currentFilter}
-          onChanged={this.onFilterChanged.bind(this)}
-        />
-        <ListView
-          rowsIdArray={this.props.rowsIdArray}
-          rowsById={this.props.rowsById}
-          renderRow={this.renderRow.bind(this)} />
+        <div className="LeftPane">
+          <TopicFilter
+            className="TopicFilter"
+            topics={this.props.topicsByUrl}
+            selected={this.props.currentFilter}
+            onChanged={this.onFilterChanged.bind(this)}
+          />
+          <ListView
+            rowsIdArray={this.props.rowsIdArray}
+            rowsById={this.props.rowsById}
+            renderRow={this.renderRow.bind(this)} />
+        </div>
+        <div className="ContentPane">
+          <PostView post={this.props.currentPost} />
+        </div>
       </div>
     );
   }
@@ -42,8 +49,13 @@ class PostsScreen extends Component {
   }
 
   renderRow(rowId, row) {
+    const selected = this.props.currentPost === row;
     return (
-      <ListRow rowId={rowId}>
+      <ListRow 
+        rowId={rowId}
+        onClick={this.onRowClick.bind(this)}
+        selected={selected}
+      >
         {!row.thumbnail ? false :
           <img className="thumbnail" src={row.thumbnail} />
         }
@@ -54,6 +66,10 @@ class PostsScreen extends Component {
 
   onFilterChanged(newFilter) {
     this.props.dispatch(postsActions.changeFilter(newFilter));
+  }
+  
+  onRowClick(rowId) {
+    this.props.dispatch(postsActions.selectPost(rowId));
   }
 
 }

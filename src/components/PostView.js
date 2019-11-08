@@ -4,7 +4,7 @@ export default class PostView extends Component{
     render(){
         if (!this.props.post) return this.renderEmpty();
         if (this.props.post.body) return this.renderBody();
-        else if (this._isImage(this.props.pors.url)) return this.renderImage();
+        else if (this._isImage(this.props.post.url)) return this.renderImage();
         else return this.renderUrl();
     }
     
@@ -50,7 +50,7 @@ export default class PostView extends Component{
     
     _isImage(url){
         if (!url) return false;
-        return (url.endWith('.jpg')||url.endWith('.gif')||url.endWith('.png'));
+        return (url.endsWith('.jpg')||url.endsWith('.gif')||url.endsWith('.png'));
     }
     
 }

@@ -80,7 +80,8 @@ function mapStateToProps(state) {
     rowsById: postsById,
     rowsIdArray: postsIdArray,
     topicsByUrl: topicsSelectors.getSelectedTopicsByUrl(state),
-    currentFilter: postsSelectors.getCurrentFilter(state)
+    currentFilter: postsSelectors.getCurrentFilter(state),
+    currentPost: postsSelectors.getCurrentPost(state)
   };
 }
 
